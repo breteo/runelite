@@ -14,42 +14,12 @@ public interface GuideConfig extends Config
     };
 
     @ConfigItem(
-            keyName = "showWorldOnLogin",
-            name = "Show world on login",
-            description = "Shows world number on friend login notifications"
+            keyName = "greeting",
+            name = "Welcome Greeting",
+            description = "The message to show to the user when they login"
     )
-    default boolean showWorldOnLogins()
+    default String greeting()
     {
-        return false;
-    }
-
-    @ConfigItem(
-            position = 1,
-            keyName = "quickLookup",
-            name = "Hotkey lookup (Alt + Left click)",
-            description = "Configures whether to enable the hotkey lookup for GE searches"
-    )
-    default boolean quickLookup()
-    {
-        return true;
-    }
-
-    @ConfigSection(
-            position = 2,
-            name = "Quest Filters",
-            description = "Determines which quests should be shown via the selected filter(s)"
-    )
-    String filterSection = "filterSection";
-
-    @ConfigItem(
-            keyName = "orderListBy",
-            name = "Quest order",
-            description = "Configures which way to order the quest list",
-            position = 3,
-            section = filterSection
-    )
-    default String[] orderListBy()
-    {
-        return stuff;
+        return "Hello";
     }
 }
