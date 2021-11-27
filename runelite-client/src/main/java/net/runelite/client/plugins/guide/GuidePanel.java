@@ -17,6 +17,7 @@ import javax.swing.undo.UndoManager;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
+import net.runelite.api.hooks.Callbacks;
 
 @Slf4j
 class GuidePanel extends PluginPanel

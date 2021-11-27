@@ -3,6 +3,10 @@ package net.runelite.client.plugins.guide;
 import com.google.inject.Provides;
 import java.awt.image.BufferedImage;
 import javax.inject.Inject;
+
+import javaGOAP.DefaultGoapAgent;
+import net.runelite.api.events.GameTick;
+import net.runelite.api.events.StatChanged;
 import net.runelite.client.events.SessionOpen;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -11,6 +15,8 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.util.ImageUtil;
+import net.runelite.api.Client;
+import javaGOAP.GoapAgent;
 
 @PluginDescriptor(
         name = "Guides",
@@ -29,6 +35,13 @@ public class GuidePlugin extends Plugin
     private GuidePanel panel;
     private NavigationButton navButton;
 
+    @Inject
+    private Client client;
+
+    Character player;
+    Observer observer;
+    RuneUnit runeunit;
+    GoapAgent agent;
     @Provides
     GuideConfig getConfig(ConfigManager configManager)
     {
@@ -42,6 +55,16 @@ public class GuidePlugin extends Plugin
         panel.init(config);
 
         final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "notes_icon.png");
+        player = new Character();
+
+        // observer updates the character with new skill data
+        observer = new Observer(player, client);
+        // we then set the runeunit to the initial player data (one skill at level 1)
+        runeunit = new RuneUnit(player);
+        // once observer is initialized, we use the new character from the observer
+        runeunit.setStats(observer.pc);
+
+        agent = new DefaultGoapAgent(runeunit);
 
         navButton = NavigationButton.builder()
                 .tooltip("Guides")
@@ -65,6 +88,18 @@ public class GuidePlugin extends Plugin
         // update notes
         String data = config.notesData();
         panel.setNotes(data);
+    }
+
+    @Subscribe
+    public void onGameTick(GameTick event) {
+        observer.setStats();
+        String data = observer.pc.levels.toString();
+        panel.setNotes(data);
+    }
+
+    @Subscribe
+    public void onExpGain(StatChanged event) {
+        
     }
 }
 
