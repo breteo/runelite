@@ -14,6 +14,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
+import javax.swing.JLabel;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
@@ -24,6 +25,8 @@ class GuidePanel extends PluginPanel
 {
     private final JTextArea notesEditor = new JTextArea();
     private final UndoManager undoRedo = new UndoManager();
+    public JLabel label = new JLabel("Hello World");
+    public JTextArea statArea = new JTextArea();
 
     void init(GuideConfig config)
     {
@@ -40,11 +43,17 @@ class GuidePanel extends PluginPanel
         notesEditor.setLineWrap(true);
         notesEditor.setWrapStyleWord(true);
 
+        statArea.setEditable(false);
+        statArea.setLineWrap(true);
+        statArea.setWrapStyleWord(true);
+
         JPanel notesContainer = new JPanel();
+        JPanel labelContainer = new JPanel();
         notesContainer.setLayout(new BorderLayout());
+        labelContainer.setLayout(new BorderLayout());
         notesContainer.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 
-        notesEditor.setOpaque(false);
+        statArea.setOpaque(false);
 
         // load note text
         String data = config.notesData();
@@ -128,11 +137,17 @@ class GuidePanel extends PluginPanel
         notesContainer.add(notesEditor, BorderLayout.CENTER);
         notesContainer.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        add(notesContainer, BorderLayout.CENTER);
+        labelContainer.add(statArea, BorderLayout.CENTER);
+        labelContainer.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        // add(notesContainer, BorderLayout.CENTER);
+        add(labelContainer, BorderLayout.NORTH);
     }
 
-    void setNotes(String data)
+    void setStats(String data)
     {
-        notesEditor.setText(data);
+        statArea.setText(data);
     }
+
+    void setLabel(String data) { label.setText(data);}
 }

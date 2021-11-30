@@ -3,20 +3,28 @@ package net.runelite.client.plugins.guide;
 import javaGOAP.GoapAction;
 import javaGOAP.IGoapUnit;
 import net.runelite.api.Skill;
+import java.util.Queue;
 
 public class CheckStat extends GoapAction {
 
-    public CheckStat(Object target, Skill skill) {
-        super(target);
-        this.addPrecondition(0, "Increase " + skill.toString(), false);
-        this.addEffect(0, "Increase " + skill.toString(), true);
+    Skill skill;
+    int oldLevel;
 
+    public CheckStat(Object target, Skill skill, Queue<Skill> priorityQueue) {
+        super(target);
+        this.skill = skill;
+        oldLevel = ((Character) this.target).levels.get(skill);
+        this.addPrecondition(0, skill.toString(), oldLevel);
+        this.addEffect(0, skill.toString(), oldLevel + 1);
     }
 
     @Override // precondition required to perform the action
     protected boolean checkProceduralPrecondition(IGoapUnit arg0) {
-        // TODO Auto-generated method stub
-        return true;
+        // check to see if skill has leveled up
+        if (((Character) this.target).levels.get(skill) > oldLevel) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -37,7 +45,7 @@ public class CheckStat extends GoapAction {
     // return true when action is done
     protected boolean isDone(IGoapUnit arg0) {
         // TODO Auto-generated method stub
-        System.out.println("Increased melee level");
+        System.out.println("Increased level");
         return true;
     }
 
