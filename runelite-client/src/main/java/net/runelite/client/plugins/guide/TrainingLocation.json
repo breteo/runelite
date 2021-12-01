@@ -1,0 +1,24 @@
+{
+  "exampleInfo": {
+    "name": "Chicken",
+    "location": "\tNorth-east of Lumbridge just east of River Lum, south of River Lum in Farmer Fred's chicken coop",
+    "hitpoints": "3",
+    "combatLevel": "1"
+  },
+  "upToTwentyGuide": [
+    {
+      "chickenInfo": {
+        "name": "Chicken",
+        "location": "\tNorth-east of Lumbridge just east of River Lum, south of River Lum in Farmer Fred's chicken coop",
+        "hitpoints": "3",
+        "combatLevel": "1"
+      },
+      "monkInfo": {
+        "name": "Monk",
+        "location": "\tEdgeville Monastery",
+        "hitpoints": "15",
+        "combatLevel": "5"
+      }
+    }
+  ]
+}
