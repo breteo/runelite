@@ -1,0 +1,137 @@
+{
+  "skill": [
+    {
+      "name": "cooking",
+      "level": [
+        {"1": [
+          {"shrimp": 30},
+          {"meat": 40},
+          {"chicken": 30},
+          {"anchovies": 30}
+        ]
+        },
+
+        {"15": {"trout": 70}},
+
+        {"20": {"pike": 80}},
+
+        {"30": [
+          {"tuna": 100},
+          {"apple pie": 130}
+        ]
+        },
+
+        {"32": {"cooks guild": "N/A"}},
+
+        {"35": [
+          {"pizza": 143},
+          {"jug of wine": 200}
+        ]
+        },
+
+        {"40": {"lobster": 120}},
+
+        {"45": [
+          {"swordfish": 140},
+          {"meat pizza": 168}
+        ]
+        },
+
+        {"55": {"anchovy pizza": 182}}
+      ]
+    },
+
+    {
+      "name": "crafting",
+      "level": [
+        {"8": [
+          {"smelting unstrung gold amulets": 30},
+          {"making bowls": 33}
+        ]
+        },
+
+        {"18": {"crafting leather chaps": 27}},
+
+        {"20": {"cutting sapphires": 50}},
+
+        {"23": {"smelting tiaras": 52.5}},
+
+        {"27": {"cutting emeralds": 67.5}},
+
+        {"28": {"crafting hardleather bodies": 35}},
+
+        {"34": {"cutting rubies": 85}},
+        {"43": {"cutting diamonds": 107.5}}
+      ]
+    },
+
+    {
+      "name": "firemaking",
+      "level": [
+        {"1": {"normal": 40}},
+
+        {"15": {"oak": 60}},
+
+        {"30": {"willow": 90}},
+
+        {"45": {"maple": 135}},
+
+        {"60": {"yew": 202.5}}
+      ]
+    },
+
+    {
+      "name": "fishing",
+      "level": [
+        {"1": {"shrimp": 10}},
+
+        {"15": {"anchovy": 40}},
+
+        {"20": {"trout": 50}},
+
+        {"30": {"salmon": 70}}
+      ]
+
+    },
+
+    {
+      "name": "melee training",
+      "level": [
+        {"1": [
+          {"chicken": 12},
+          {"monk": 60},
+          {"seagull": 40},
+          {"giant rat": 26.7}
+        ]
+        },
+
+        {"20": {"giant frogs": 92}},
+
+        {"40": [
+          {"flesh crawler": }
+        ]}
+      ]
+    }
+
+
+
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
