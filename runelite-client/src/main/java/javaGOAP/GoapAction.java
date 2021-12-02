@@ -283,4 +283,15 @@ public abstract class GoapAction {
 			return false;
 		}
 	}
+
+	public String toString() {
+		String pc = "", ef = "";
+		for (GoapState s : preconditions) {
+			pc += (s.toString() + ", ");
+		}
+		for (GoapState s : effects) {
+			ef += (s.toString() + ", ");
+		}
+		return pc + "\n" + ef + "\n";
+	}
 }

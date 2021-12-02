@@ -1,27 +1,29 @@
 package net.runelite.client.plugins.guide;
 
 import javaGOAP.GoapAction;
+import javaGOAP.GoapState;
 import javaGOAP.IGoapUnit;
 import net.runelite.api.Skill;
-import java.util.Queue;
+
+import java.util.HashSet;
 
 public class CheckStat extends GoapAction {
 
     Skill skill;
-    int oldLevel;
+    int levelTo;
 
-    public CheckStat(Object target, Skill skill, Queue<Skill> priorityQueue) {
+    public CheckStat(Object target, Skill skill, int levelTo) {
         super(target);
         this.skill = skill;
-        oldLevel = ((Character) this.target).levels.get(skill);
-        this.addPrecondition(0, skill.toString(), oldLevel);
-        this.addEffect(0, skill.toString(), oldLevel + 1);
+        this.levelTo = levelTo;
+        this.addPrecondition(0, skill.toString(), this.levelTo - 1);
+        this.addEffect(0, skill.toString(), this.levelTo);
     }
 
     @Override // precondition required to perform the action
     protected boolean checkProceduralPrecondition(IGoapUnit arg0) {
         // check to see if skill has leveled up
-        if (((Character) this.target).levels.get(skill) > oldLevel) {
+        if (((Character) this.target).levels.get(skill) > levelTo) {
             return true;
         }
         return false;
@@ -76,4 +78,19 @@ public class CheckStat extends GoapAction {
 
     }
 
+    @Override
+    public String toString() {
+        String pc = "", ef = "";
+
+        HashSet<GoapState> preconditions = getPreconditions();
+        HashSet<GoapState> effects = getEffects();
+        for (GoapState s : preconditions) {
+            pc += (s.toString() + ", ");
+        }
+        for (GoapState s : effects) {
+            ef += (s.toString() + ", ");
+        }
+        return skill.toString() + " to " + levelTo + ": " + "Preconditions: " + "\n" + pc + "\n" + "Effects: " + "\n" + ef + "\n";
+
+    }
 }

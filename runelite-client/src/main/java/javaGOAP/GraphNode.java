@@ -41,7 +41,7 @@ public class GraphNode {
 	 *            the action whose effects and preconditions are being used to
 	 *            define the node.
 	 */
-	GraphNode(GoapAction goapAction) {
+    public GraphNode(GoapAction goapAction) {
 		if (goapAction != null) {
 			this.preconditions = goapAction.getPreconditions();
 			this.effects = goapAction.getEffects();
