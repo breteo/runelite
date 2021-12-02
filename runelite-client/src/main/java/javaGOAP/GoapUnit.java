@@ -167,6 +167,13 @@ public abstract class GoapUnit implements IGoapUnit {
 	public HashSet<GoapAction> getAvailableActions() {
 		return this.availableActions;
 	}
+	public String getActions() {
+		String s = "";
+		for (GoapAction a : this.availableActions) {
+			s += (a.toString() + "\n");
+		}
+		return s;
+	}
 
 	// -------------------- Events
 

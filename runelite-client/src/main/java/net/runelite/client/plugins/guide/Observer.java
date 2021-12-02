@@ -21,6 +21,6 @@ public class Observer {
     }
 
     public void setStats() {
-        pc.initStats(getStats());
+        this.pc.initStats(getStats());
     }
 }

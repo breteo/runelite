@@ -11,11 +11,16 @@ public class RuneUnit extends GoapUnit {
     Character unitChar;
     Queue<GoapAction> unitPlan;
     Queue<Skill> priorityQueue;
-    public RuneUnit(Character character) {
+    Hashtable<String, Integer> metadata;
+    Hashtable<Skill, Integer> goalStatTable;
+    public RuneUnit(Character character, Hashtable<Skill, Integer> goalStatTable) {
         this.unitChar = character;
+        this.goalStatTable = goalStatTable;
         initWorldState(character);
         initActions();
     }
+
+
 
     private void initWorldState(Character character) {
         for (Skill s : Skill.values()) {
@@ -25,12 +30,17 @@ public class RuneUnit extends GoapUnit {
 
     public void updateWorldState(Character character) {
         for(GoapState state : getWorldState()) {
-            this.removeWorldState(state);
+            try {
+                this.removeWorldState(state);
+            } catch (Exception e) {
+                System.out.println("OOPS...");
+            }
         }
         initWorldState(character);
     }
 
     public void initGoalState(Hashtable<Skill, Integer> goalStatTable) {
+        this.goalStatTable = goalStatTable;
         for (Skill s : Skill.values()) {
             if (goalStatTable.get(s) != this.unitChar.levels.get(s) &&
                 goalStatTable.get(s) != null) {
@@ -41,7 +51,11 @@ public class RuneUnit extends GoapUnit {
 
     public void initActions() {
         for (Skill s : Skill.values()) {
-            this.addAvailableAction(new CheckStat(this.unitChar, s, null));
+            if (goalStatTable.get(s) != null) {
+                for (int i = unitChar.levels.get(s) + 1; i <= goalStatTable.get(s); i++) {
+                    this.addAvailableAction(new CheckStat(this.unitChar, s, i));
+                }
+            }
         }
     }
 
@@ -50,8 +64,8 @@ public class RuneUnit extends GoapUnit {
         System.out.println("Plan Failed.");
     }
 
-    public Queue<GoapAction> putGoapPlan(Queue<GoapAction> plan) {
-        return plan;
+    public Queue<GoapAction> putGoapPlan() {
+        return this.unitPlan;
     }
 
     @Override
@@ -61,7 +75,7 @@ public class RuneUnit extends GoapUnit {
 
     @Override
     public void goapPlanFound(Queue<GoapAction> plan) {
-        unitPlan = putGoapPlan(plan);
+        unitPlan = plan;
         System.out.println("Plan Found");
     }
 
@@ -79,5 +93,10 @@ public class RuneUnit extends GoapUnit {
 
     public void setStats(Character c) {
         this.unitChar = c;
+    }
+
+    public void setStats(Character c, Hashtable<String, Integer> metadata) {
+        this.unitChar = c;
+        this.metadata = metadata;
     }
 }

@@ -32,6 +32,7 @@ class IdleState implements IFSMState {
 		return true;
 	}
 
+	public IGoapPlanner getPlanner() { return goapPlanner; }
 	// -------------------- Events
 
 	// ------------------------------ Plan created
