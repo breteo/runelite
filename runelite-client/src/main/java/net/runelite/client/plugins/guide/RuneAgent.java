@@ -4,27 +4,27 @@ import javaGOAP.DefaultGoapPlanner;
 import javaGOAP.GoapAgent;
 import javaGOAP.IGoapPlanner;
 import javaGOAP.IGoapUnit;
+import net.runelite.api.Client;
+import net.runelite.api.Skill;
 
 import java.util.Hashtable;
 
 public class RuneAgent extends GoapAgent {
 
 
-    public RuneAgent(RuneUnit assignedUnit) {
-        super(assignedUnit);
+    public RuneAgent(Client client, Hashtable<Skill, Integer> gskills) {
+        super(new RuneUnit(new Observer(new Character(), client), gskills, client));
     }
 
     @Override
     protected IGoapPlanner generatePlannerObject() {
-        return new DefaultGoapPlanner();
+        return new RunePlanner();
+    }
+
+    public void updateObserver() {
+        ((RuneUnit)this.assignedGoapUnit).updateObserver();
     }
 
     public RuneUnit getUnit() { return (RuneUnit) this.getAssignedGoapUnit(); }
-
-    public void updateUnit(Character c, Hashtable<String, Integer> metadata) {
-        RuneUnit rUnit = (RuneUnit) this.assignedGoapUnit;
-        rUnit.setStats(c);
-    }
-
 
 }

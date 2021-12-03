@@ -127,11 +127,11 @@ public abstract class GoapAction {
 
 	// ------------------------------ Getter / Setter
 
-	protected HashSet<GoapState> getPreconditions() {
+	public HashSet<GoapState> getPreconditions() {
 		return this.preconditions;
 	}
 
-	protected HashSet<GoapState> getEffects() {
+	public HashSet<GoapState> getEffects() {
 		return this.effects;
 	}
 

@@ -65,11 +65,8 @@ public class GuidePlugin extends Plugin
         panel.init(config);
 
         final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "notes_icon.png");
-        player = new Character();
 
         // observer updates the character with new skill data
-        observer = new Observer(player, client);
-        observer.setStats();
         goalSkills = new Hashtable<Skill, Integer>();
         goalSkills.put(Skill.ATTACK, 25);
 
@@ -79,11 +76,12 @@ public class GuidePlugin extends Plugin
         pdOptions.put("availableActions", true);
 
         // we then set the runeunit to the initial player data (one skill at level 1)
-        runeunit = new RuneUnit(observer.pc, goalSkills);
-        runeunit.initGoalState(goalSkills);
+        // runeunit = new RuneUnit(observer.pc, goalSkills, client);
+        // runeunit.initGoalState(goalSkills);
 
-        agent = new DefaultGoapAgent(runeunit);
-
+        agent = new RuneAgent(client, goalSkills);
+        ((RuneAgent)agent).updateObserver();
+        agent.update();
 
 
         navButton = NavigationButton.builder()
@@ -110,12 +108,11 @@ public class GuidePlugin extends Plugin
 
     @Subscribe
     public void onGameTick(GameTick event) {
-        observer.setStats();
-        runeunit.updateWorldState(observer.pc);
-        agent.update();
-        // PlanData pd = new PlanData(runeunit, agent, pdOptions);
-        // String data = observer.pc.levels.toString();
-        String data = ((RuneUnit)agent.assignedGoapUnit).getActions();
+        if (!((RuneUnit)agent.assignedGoapUnit).planFound()) {
+            agent.update();
+        }
+        // agent.update();
+        String data = "plan found: " + ((RuneUnit)agent.assignedGoapUnit).putGoapPlan().toString();
         panel.setStats(data);
         // check if the player has moved outside
     }
@@ -123,7 +120,7 @@ public class GuidePlugin extends Plugin
     @Subscribe
     public void onStatChanged(StatChanged event) {
 
-        observer.setStats();
+
 
         Skill skillup = event.getSkill();
         Hashtable<String, Integer> metadata = new Hashtable<String, Integer>();

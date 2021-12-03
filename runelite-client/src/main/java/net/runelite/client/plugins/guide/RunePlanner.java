@@ -1,44 +1,89 @@
 package net.runelite.client.plugins.guide;
 
 import javaGOAP.*;
+import net.runelite.api.Deque;
+import net.runelite.api.Client;
+import net.runelite.api.Skill;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class RunePlanner implements IGoapPlanner {
 
     GoapState goalState;
-    IGoapUnit goapUnit;
     GraphNode startNode;
     List<GraphNode> endNodes;
+    Queue<GoapAction> createdPlan;
     @Override
     public Queue<GoapAction> plan(IGoapUnit goapUnit) {
+        RuneUnit runit = (RuneUnit) goapUnit;
+        Observer obs = runit.obChar;
+        createdPlan = new PriorityQueue<GoapAction>();
+        List<GoapState> goalState = goapUnit.getGoalState();
+        HashSet<GoapState> worldState = goapUnit.getWorldState();
+        HashSet<GoapAction> actions = goapUnit.getAvailableActions();
+        Hashtable<String, Skill> strToSkill = new Hashtable<String, Skill>();
 
-        Queue<GoapAction> createdPlan = null;
-        this.goapUnit = goapUnit;
-        this.startNode = new GraphNode(null);
-        this.endNodes = new ArrayList<GraphNode>();
+        strToSkill.put("ATTACK", Skill.ATTACK);
+        strToSkill.put("STRENGTH", Skill.STRENGTH);
+        strToSkill.put("DEFENCE", Skill.DEFENCE);
+        strToSkill.put("HITPOINTS", Skill.HITPOINTS);
+        strToSkill.put("MAGIC", Skill.MAGIC);
 
-        try {
-            sortGoalStates();
-        } catch(Exception e) {}
 
-        return null;
+
+        // greedy planner, no graph, only works for attack
+        // for each item in the goal table, get the world state, then add
+        // actions that move the world state towards the goal of the plan
+
+
+        Integer currentLevel = runit.obChar.client.getRealSkillLevel(Skill.ATTACK);
+        Integer goalLevel = (Integer)goalState.get(0).value;
+        Skill currentSkill = strToSkill.get(goalState.get(0).effect);
+        System.out.println(currentLevel);
+
+        for (GoapAction action : actions) {
+            CheckStat caction = (CheckStat) action;
+            if (currentLevel < goalLevel && caction.skill == currentSkill) {
+                createdPlan.add(action);
+            }
+        }
+        sort();
+        return createdPlan;
     }
 
+    public Boolean checkPreconditions(GoapAction check, Hashtable<String, Integer> worldState) {
+        HashSet<GoapState> preconditions = check.getPreconditions();
+        ArrayList<Boolean> finalCheck = new ArrayList<Boolean>();
+        Boolean finalBool = false;
 
-    protected List<GoapState> sortGoalStates() {
-        if (this.goapUnit.getGoalState().size() > 1) {
-            this.goapUnit.getGoalState().sort(new Comparator<GoapState>() {
-                 @Override
-                public int compare(GoapState o1, GoapState o2) {
-                        return o2.importance.compareTo(o1.importance);
-                    }
-            });
+        for (GoapState g : preconditions) {
+            if ((Integer)g.value == worldState.get(g.effect)) {
+                finalCheck.add(true);
+            } else {
+                finalCheck.add(false);
+            }
         }
-        return this.goapUnit.getGoalState();
+
+        for (Boolean b : finalCheck) {
+            if (!b) {
+                finalBool = false;
+                break;
+            }
+            finalBool = true;
+        }
+        return finalBool;
+    }
+
+    public void sort() {
+        ArrayList<GoapAction> copy = new ArrayList<GoapAction>();
+        for (GoapAction g: this.createdPlan) {
+            copy.add(g);
+        }
+        copy.sort(null);
+        this.createdPlan = new PriorityQueue<GoapAction>();
+        for (GoapAction g : copy) {
+            this.createdPlan.add(g);
+        }
     }
 }
 

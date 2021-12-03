@@ -7,7 +7,7 @@ import net.runelite.api.Skill;
 
 import java.util.HashSet;
 
-public class CheckStat extends GoapAction {
+public class CheckStat extends GoapAction implements Comparable<CheckStat> {
 
     Skill skill;
     int levelTo;
@@ -91,6 +91,18 @@ public class CheckStat extends GoapAction {
             ef += (s.toString() + ", ");
         }
         return skill.toString() + " to " + levelTo + ": " + "Preconditions: " + "\n" + pc + "\n" + "Effects: " + "\n" + ef + "\n";
+
+    }
+
+    @Override
+    public int compareTo(CheckStat o) {
+        if (this.levelTo > o.levelTo) {
+            return 1;
+        } else if (this.levelTo < o.levelTo) {
+            return -1;
+        } else {
+            return 0;
+        }
 
     }
 }
