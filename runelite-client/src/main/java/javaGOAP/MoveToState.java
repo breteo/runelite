@@ -5,7 +5,7 @@ package javaGOAP;
  * 
  * @author P H - 28.01.2017
  */
-class MoveToState implements IFSMState {
+public class MoveToState implements IFSMState {
 
 	GoapAction currentAction;
 

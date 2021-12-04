@@ -9,7 +9,7 @@ import java.util.Queue;
  * 
  * @author P H - 28.01.2017
  */
-class IdleState implements IFSMState {
+public class IdleState implements IFSMState {
 	private IGoapPlanner goapPlanner;
 	private List<Object> planCreatedListeners = new ArrayList<Object>();
 

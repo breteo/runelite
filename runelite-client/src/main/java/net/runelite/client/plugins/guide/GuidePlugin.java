@@ -112,7 +112,8 @@ public class GuidePlugin extends Plugin
             agent.update();
         }
         // agent.update();
-        String data = "plan found: " + ((RuneUnit)agent.assignedGoapUnit).putGoapPlan().toString();
+        // String data = "plan found: " + ((RuneUnit)agent.assignedGoapUnit).putGoapPlan().toString();
+        String data = "current action: " + ((RuneAgent)agent).fsmTop();
         panel.setStats(data);
         // check if the player has moved outside
     }
