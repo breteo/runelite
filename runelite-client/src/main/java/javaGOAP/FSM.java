@@ -10,10 +10,11 @@ import java.util.Stack;
  * 
  * @author P H - 28.01.2017
  */
-final class FSM {
+public final class FSM {
 
 	private Stack<IFSMState> states = new Stack<IFSMState>();
 	private List<Object> planEventListeners = new ArrayList<Object>();
+	public IFSMState top;
 
 	public FSM() {
 
@@ -29,7 +30,9 @@ final class FSM {
 	 * @param goapUnit
 	 *            unit whose actions are getting cycled.
 	 */
+
 	void update(IGoapUnit goapUnit) {
+		top = this.states.peek();
 		try {
 			if (!this.states.isEmpty() && !this.states.peek().runGoapAction(goapUnit)) {
 				IFSMState state = this.states.pop();
