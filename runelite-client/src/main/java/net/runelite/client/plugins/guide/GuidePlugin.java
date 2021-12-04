@@ -82,6 +82,7 @@ public class GuidePlugin extends Plugin
         agent = new RuneAgent(client, goalSkills);
         ((RuneAgent)agent).updateObserver();
         agent.update();
+        agent.update();
 
 
         navButton = NavigationButton.builder()
@@ -108,10 +109,9 @@ public class GuidePlugin extends Plugin
 
     @Subscribe
     public void onGameTick(GameTick event) {
-        if (!((RuneUnit)agent.assignedGoapUnit).planFound()) {
+        /*if (!((RuneUnit)agent.assignedGoapUnit).planFound()) {
             agent.update();
-        }
-        // agent.update();
+        }*/
         // String data = "plan found: " + ((RuneUnit)agent.assignedGoapUnit).putGoapPlan().toString();
         String data = "current action: " + ((RuneAgent)agent).fsmTop();
         panel.setStats(data);
@@ -120,29 +120,8 @@ public class GuidePlugin extends Plugin
 
     @Subscribe
     public void onStatChanged(StatChanged event) {
-
-
-
-        Skill skillup = event.getSkill();
-        Hashtable<String, Integer> metadata = new Hashtable<String, Integer>();
-        metadata.put("skill_ordinal", skillup.ordinal());
-        metadata.put("next_level", client.getRealSkillLevel(skillup) + 1);
-        metadata.put("level", event.getLevel());
-        metadata.put("xp", event.getXp());
-        metadata.put("next_level_xp", Experience.getXpForLevel(metadata.get("next_level")));
-
-        /*Runnable agentWork = () -> {
-            threadFlag = false;
-            // pass the metadata to the unit
-            ((RuneUnit)agent.getAssignedGoapUnit()).setStats(observer.pc, metadata);
-            // update the plan
-            agent.update();
-            threadFlag = true;
-        };
-        if (threadFlag) {
-            agentThread = new Thread(agentWork);
-            agentThread.start();
-        }*/
+        agent.update();
+        // based on new data, update the main plugin view
     }
 }
 

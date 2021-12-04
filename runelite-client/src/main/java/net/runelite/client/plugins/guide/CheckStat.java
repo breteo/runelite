@@ -11,11 +11,13 @@ public class CheckStat extends GoapAction implements Comparable<CheckStat> {
 
     Skill skill;
     int levelTo;
+    boolean satisfied;
 
     public CheckStat(Object target, Skill skill, int levelTo) {
         super(target);
         this.skill = skill;
         this.levelTo = levelTo;
+        this.satisfied = false;
         this.addPrecondition(0, skill.toString(), this.levelTo - 1);
         this.addEffect(0, skill.toString(), this.levelTo);
     }
@@ -23,9 +25,14 @@ public class CheckStat extends GoapAction implements Comparable<CheckStat> {
     @Override // precondition required to perform the action
     protected boolean checkProceduralPrecondition(IGoapUnit arg0) {
         // check to see if skill has leveled up
-        if (((Character) this.target).levels.get(skill) > levelTo) {
+        if (((Character) this.target).levels.get(skill) >= levelTo) {
+            System.out.println("Current Level: " + ((Character) this.target).levels.get(skill));
+            System.out.println("Satisfied: " + satisfied);
+            satisfied = true;
             return true;
         }
+        System.out.println("Satisfied: " + satisfied);
+        satisfied = false;
         return false;
     }
 
@@ -47,8 +54,7 @@ public class CheckStat extends GoapAction implements Comparable<CheckStat> {
     // return true when action is done
     protected boolean isDone(IGoapUnit arg0) {
         // TODO Auto-generated method stub
-        System.out.println("Increased level");
-        return true;
+        return satisfied;
     }
 
     @Override
@@ -61,7 +67,7 @@ public class CheckStat extends GoapAction implements Comparable<CheckStat> {
     @Override
     protected boolean performAction(IGoapUnit arg0) {
         // verify if the skill has been leveled up
-        return true;
+        return satisfied;
     }
 
     @Override
