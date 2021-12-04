@@ -1,137 +1,310 @@
 {
-  "skill": [
-    {
-      "name": "cooking",
-      "level": [
-        {"1": [
-          {"shrimp": 30},
-          {"meat": 40},
-          {"chicken": 30},
-          {"anchovies": 30}
+    "melee" : {
+        "upToTwentyGuide" : [
+            {
+                "chickenInfo" : {
+                    "name": "Chicken",
+                    "location": "\tNorth-east of Lumbridge just east of River Lum, south of River Lum in Farmer Fred's chicken coop",
+                    "hitpoints": 3,
+                    "combatLevel": 1
+                },
+                "monkInfo" : {
+                    "name": "Monk",
+                    "location": "\tEdgeville Monastery",
+                    "hitpoints": 15,
+                    "combatLevel": 5
+                },
+                "seagullInfo" : {
+                    "name": "Seagull",
+                    "location": "\tPort Sarim Ports",
+                    "hitpoints": 6,
+                    "combatLevel": 2
+                },
+                "giantRatInfo" : {
+                    "name": "Giant Rat",
+                    "location": "\tLumbridge Swamp",
+                    "hitpoints": 5,
+                    "combatLevel": 3
+                }
+            }
+        ],
+        "upToFourtyGuide" : [
+            {
+                "fleshCrawlerInfo" : {
+                    "name": "Flesh Crawler",
+                    "location": "\tCatacomb of Famine (level 2) of Stronghold of Security",
+                    "hitpoints": 25,
+                    "combatLevel": 28
+                },
+                "zombieInfo" : {
+                    "name": "Zombie",
+                    "location": "\tCatacomb of Famine (level 2) of Stronghold of Security",
+                    "hitpoints": 30,
+                    "combatLevel": 30
+                }
+            }
+        ],
+        "upToNinetyNineGuide" : [
+            {
+                "giantSpiderInfo" : {
+                    "name": "Giant Spider",
+                    "location": "\tPit of Pestilence (level 3) of Stronghold of Security",
+                    "hitpoints": 50,
+                    "combatLevel": 50
+                }
+            }
         ]
-        },
-
-        {"15": {"trout": 70}},
-
-        {"20": {"pike": 80}},
-
-        {"30": [
-          {"tuna": 100},
-          {"apple pie": 130}
-        ]
-        },
-
-        {"32": {"cooks guild": "N/A"}},
-
-        {"35": [
-          {"pizza": 143},
-          {"jug of wine": 200}
-        ]
-        },
-
-        {"40": {"lobster": 120}},
-
-        {"45": [
-          {"swordfish": 140},
-          {"meat pizza": 168}
-        ]
-        },
-
-        {"55": {"anchovy pizza": 182}}
-      ]
     },
+    "ranged" : {
+        "upToTwentyGuide" : [
+            {
+                "seagullInfo" : {
+                    "name": "Seagull",
+                    "location": "\tPort Sarim Ports",
+                    "hitpoints": 6,
+                    "combatLevel": 2
+                },
+                "cowInfo" : {
+                    "name": "Cow",
+                    "location": "\tField south of the Champions' Guild",
+                    "hitpoints": 8,
+                    "combatLevel": 2
+                },
+                "goblinInfo" : {
+                    "name": "Goblin",
+                    "location": "\tLumbridge",
+                    "hitpoints": 5,
+                    "combatLevel": 2
+                },
+                "chickenInfo" : {
+                    "name": "Chicken",
+                    "location": "\tNorth-east of Lumbridge just east of River Lum, south of River Lum in Farmer Fred's chicken coop",
+                    "hitpoints": 3,
+                    "combatLevel": 1
+                }
 
-    {
-      "name": "crafting",
-      "level": [
-        {"8": [
-          {"smelting unstrung gold amulets": 30},
-          {"making bowls": 33}
+            }
+        ],
+        "upToTwentyFiveGuide" : [
+            {
+                "barbarianInfo" : {
+                    "name": "Barbarian",
+                    "location": "\tBarbarian Village",
+                    "hitpoints": 14,
+                    "combatLevel": 8
+                }
+            }
+        ],
+        "upToFiftySixGuide" : [
+            {
+                "giantFrogInfo" : {
+                    "name": "Giant Frog",
+                    "location": "\tLumbridge Swamp",
+                    "hitpoints": 23,
+                    "combatLevel": 13
+                },
+                "wizardInfo" : {
+                    "name": "Wizard",
+                    "location": "\tWizards' Tower (1st floor)",
+                    "hitpoints": 14,
+                    "combatLevel": 9
+                },
+                "minotaurInfo" : {
+                    "name": "Minotaur",
+                    "location": "\tStronghold of Security (Vault of War)",
+                    "hitpoints": 10,
+                    "ocmbatLevel": 12
+                }
+            }
+        ],
+        "upToNinetyNineGuide" : [
+            {
+                "mossGiantInfo" : {
+                    "name": "Moss Giant",
+                    "location": "\tVarrock Sewers",
+                    "hitpoints": 60,
+                    "combatLevel": 42
+                },
+                "fleshCrawlerInfo" : {
+                    "name": "Flesh Crawler",
+                    "location": "\tCatacomb of Famine (level 2) of Stronghold of Security",
+                    "hitpoints": 25,
+                    "combatLevel": 28
+                },
+                "giantSpiderInfo" : {
+                    "name": "Giant Spider",
+                    "location": "\tPit of Pestilence (level 3) of Stronghold of Security",
+                    "hitpoints": 50,
+                    "combatLevel": 50
+                },
+                "hillGiantInfo" : {
+                    "name": "Hill Giant",
+                    "location": "\tEdgeville Dungeon",
+                    "hitpoints": 35,
+                    "combatLevel": 28
+                },
+                "ogressWarriorInfo" : {
+                    "name": "Ogress Warrior",
+                    "location": "\tCorsair Cove Dungeon",
+                    "hitpoints" : 82,
+                    "combatLevel": 82
+                },
+                "ogressShamanInfo" : {
+                    "name": "Ogress Shaman",
+                    "location": "\tCorsair Cove Dungeon",
+                    "hitpoints": 82,
+                    "combatLevel": 82
+                },
+                "lesserDemonInfo" : {
+                    "name": "Lesser Demon",
+                    "location": "\tCrandor and Karamja Dungeon",
+                    "hitpoints": 79,
+                    "combatLevel": 82
+                },
+                "ankouInfo" : {
+                    "name": "Ankou",
+                    "location": "\tStronghold of Security: Sepulchre of Death",
+                    "hitpoints": 60,
+                    "combatLevel": 75
+                }
+            }
         ]
-        },
-
-        {"18": {"crafting leather chaps": 27}},
-
-        {"20": {"cutting sapphires": 50}},
-
-        {"23": {"smelting tiaras": 52.5}},
-
-        {"27": {"cutting emeralds": 67.5}},
-
-        {"28": {"crafting hardleather bodies": 35}},
-
-        {"34": {"cutting rubies": 85}},
-        {"43": {"cutting diamonds": 107.5}}
-      ]
     },
-
-    {
-      "name": "firemaking",
-      "level": [
-        {"1": {"normal": 40}},
-
-        {"15": {"oak": 60}},
-
-        {"30": {"willow": 90}},
-
-        {"45": {"maple": 135}},
-
-        {"60": {"yew": 202.5}}
-      ]
-    },
-
-    {
-      "name": "fishing",
-      "level": [
-        {"1": {"shrimp": 10}},
-
-        {"15": {"anchovy": 40}},
-
-        {"20": {"trout": 50}},
-
-        {"30": {"salmon": 70}}
-      ]
-
-    },
-
-    {
-      "name": "melee training",
-      "level": [
-        {"1": [
-          {"chicken": 12},
-          {"monk": 60},
-          {"seagull": 40},
-          {"giant rat": 26.7}
+    "magic" : {
+        "upToSeventeenGuide" : [
+            {
+                "spellToUse": "Wind Strike",
+                "cowInfo": {
+                    "name": "Cow",
+                    "location": "\tField south of the Champions' Guild",
+                    "hitpoints": 8,
+                    "combatLevel": 2
+                },
+                "goblinInfo": {
+                    "name": "Goblin",
+                    "location": "\tLumbridge",
+                    "hitpoints": 5,
+                    "combatLevel": 2
+                },
+                "chickenInfo" : {
+                    "name": "Chicken",
+                    "location": "\tNorth-east of Lumbridge just east of River Lum, south of River Lum in Farmer Fred's chicken coop",
+                    "hitpoints": 3,
+                    "combatLevel": 1
+                },
+                "ratInfo" : {
+                    "name": "Rat",
+                    "location": "\tStronghold of Security: Catacomb of Famine",
+                    "hitpoints": 2,
+                    "combatLevel": 1 
+                },
+                "spiderInfo" : {
+                    "name": "Spider",
+                    "location": "\tStronghold of Security, Pit of Pestilence (level 3)",
+                    "hitpoints": 2,
+                    "combatLevel": 1
+                }
+            }
+        ],
+        "upToThirtyThreeGuide" : [
+            {
+                "spellToUse": "Wind Bolt",
+                "hillGiantInfo" : {
+                    "name": "Hill Giant",
+                    "location": "\tEdgeville Dungeon",
+                    "hitpoints": 35,
+                    "combatLevel": 28
+                },
+                "lesserDemonInfo" : {
+                    "name": "Lesser Demon",
+                    "location": "\tMisthalin - cage on the top floor of Wizards' Tower",
+                    "hitpoints": 79,
+                    "combatLevel": 82
+                },
+                "alKharidWarriorInfo" : {
+                    "name": "Al-Kharid Warrior",
+                    "location": "\tAl Kharid",
+                    "hitpoints": 19,
+                    "combatLevel": 9
+                },
+                "hobGoblinInfo" : {
+                    "name": "Hobgoblin",
+                    "location": "\tBandit Camp mine",
+                    "hitpoints": 29,
+                    "combatLevel": 28
+                },
+                "skeletonInfo" : {
+                    "name": "Skeleton",
+                    "location": "\tStronghold of Security, Sepulchre of Death (level 4)",
+                    "hitpoints": 24,
+                    "combatLevel": 21
+                }
+            }
+        ],
+        "upToNinetyNineGuide" : [
+            {
+                "spellToUse": "Telekinetic Grab",
+                "hobGoblinInfo" : {
+                    "name": "Hobgoblin",
+                    "location": "\tBandit Camp mine",
+                    "hitpoints": 29,
+                    "combatLevel": 28
+                },
+                "greaterDemonInfo" : {
+                    "name": "Greater Demon",
+                    "location": "\tWilderness near Demonic Ruins",
+                    "hitpoints": 87,
+                    "combatLevel": 92
+                },
+                "lesserDemonInfo" : {
+                    "name": "Lesser Demon",
+                    "location": "\tMisthalin - cage on the top floor of Wizards' Tower",
+                    "hitpoints": 79,
+                    "combatLevel": 82
+                },
+                "mossGiantInfo" : {
+                    "name": "Moss Giant",
+                    "location": "\tVarrock Sewers",
+                    "hitpoints": 60,
+                    "combatLevel": 42
+                },
+                "ankouInfo" : {
+                    "name": "Ankou",
+                    "location": "\tStronghold of Security: Sepulchre of Death",
+                    "hitpoints": 60,
+                    "combatLevel": 75
+                },
+                "ogressWarriorInfo" : {
+                    "name": "Ogress Warrior",
+                    "location": "\tCorsair Cove Dungeon",
+                    "hitpoints" : 82,
+                    "combatLevel": 82
+                },
+                "fleshCrawlerInfo" : {
+                    "name": "Flesh Crawler",
+                    "location": "\tStronghold of Security: Catacomb of Famine",
+                    "hitpoints": 25,
+                    "combatLevel": 41
+                },
+                "spiderInfo" : {
+                    "name": "Spider",
+                    "location": "\tStronghold of Security, Pit of Pestilence (level 3)",
+                    "hitpoints": 22,
+                    "combatLevel": 24
+                },
+                "giantSpiderInfo" : {
+                    "name": "Giant Spider",
+                    "location": "\tStronghold of Security: Pit of Pestilence",
+                    "hitpoints": 50,
+                    "combatLevel": 50
+                },
+                "guardInfo" : {
+                    "name": "Guard",
+                    "location": "\tFalador",
+                    "hitpoints": 22,
+                    "combatLevel": 21
+                }
+            }
         ]
-        },
-
-        {"20": {"giant frogs": 92}},
-
-        {"40": [
-          {"flesh crawler": }
-        ]}
-      ]
     }
-
-
-
-  ]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
