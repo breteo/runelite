@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class JsonParser {
 
-    BufferedReader br = new BufferedReader(new FileReader("src/main/java/TrainingLocation.json"));
+    BufferedReader br = new BufferedReader(new FileReader("src/main/java/javaGOAP/guide.JSON"));
     String line;
     StringBuilder sbuilderObj = new StringBuilder();
     JSONObject jsonObj;
@@ -45,24 +45,24 @@ public class JsonParser {
     }
 
     //Fetching dictionary in Json using JSONArray
-    public String getName(String key, String info) throws JSONException {
-        JSONArray arrObj = jsonObj.getJSONArray(key);
+    public String getName(String focus, String key, String info) throws JSONException {
+        JSONArray arrObj = jsonObj.getJSONObject(focus).getJSONArray(key);
 //        System.out.println("Name : " + name);
         return arrObj.getJSONObject(0).getJSONObject(info).getString("name");
     }
 
-    public String getLocation(String key, String info) throws JSONException {
-        JSONArray arrObj = jsonObj.getJSONArray(key);
+    public String getLocation(String focus, String key, String info) throws JSONException {
+        JSONArray arrObj = jsonObj.getJSONObject(focus).getJSONArray(key);
         return arrObj.getJSONObject(0).getJSONObject(info).getString("location");
     }
 
-    public String getHitpoints(String key, String info) throws JSONException {
-        JSONArray arrObj = jsonObj.getJSONArray(key);
+    public String getHitpoints(String focus, String key, String info) throws JSONException {
+        JSONArray arrObj = jsonObj.getJSONObject(focus).getJSONArray(key);
         return arrObj.getJSONObject(0).getJSONObject(info).getString("hitpoints");
     }
 
-    public String getLevel(String key, String info) throws JSONException {
-        JSONArray arrObj = jsonObj.getJSONArray(key);
+    public String getLevel(String focus, String key, String info) throws JSONException {
+        JSONArray arrObj = jsonObj.getJSONObject(focus).getJSONArray(key);
         return arrObj.getJSONObject(0).getJSONObject(info).getString("combatLevel");
     }
 }
