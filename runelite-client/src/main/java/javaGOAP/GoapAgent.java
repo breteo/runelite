@@ -15,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class GoapAgent
 		implements ImportantUnitChangeEventListener, PlanCreatedEventListener, FSMPlanEventListener {
 
-	private FSM fsm = new FSM();
+	public FSM fsm = new FSM();
 	private IdleState idleState;
-	private IGoapUnit assignedGoapUnit;
+	public IGoapUnit assignedGoapUnit;
 
 	/**
 	 * @param assignedUnit
@@ -54,6 +54,9 @@ public abstract class GoapAgent
 	 *         interface.
 	 */
 	protected abstract IGoapPlanner generatePlannerObject();
+	public IGoapPlanner getPlanner() { return this.idleState.getPlanner(); }
+	public Queue<GoapAction> getPlan() { return this.idleState.getPlanner().plan(assignedGoapUnit); }
+
 
 	// ------------------------------ Getter / Setter
 

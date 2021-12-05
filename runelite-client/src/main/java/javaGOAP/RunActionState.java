@@ -7,9 +7,9 @@ import java.util.Queue;
  * 
  * @author P H - 28.01.2017
  */
-class RunActionState implements IFSMState {
+public class RunActionState implements IFSMState {
 
-	private Queue<GoapAction> currentActions;
+	public Queue<GoapAction> currentActions;
 	private FSM fsm;
 
 	/**

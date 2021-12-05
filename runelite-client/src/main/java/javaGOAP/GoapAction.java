@@ -127,11 +127,11 @@ public abstract class GoapAction {
 
 	// ------------------------------ Getter / Setter
 
-	protected HashSet<GoapState> getPreconditions() {
+	public HashSet<GoapState> getPreconditions() {
 		return this.preconditions;
 	}
 
-	protected HashSet<GoapState> getEffects() {
+	public HashSet<GoapState> getEffects() {
 		return this.effects;
 	}
 
@@ -282,5 +282,16 @@ public abstract class GoapAction {
 		} else {
 			return false;
 		}
+	}
+
+	public String toString() {
+		String pc = "", ef = "";
+		for (GoapState s : preconditions) {
+			pc += (s.toString() + ", ");
+		}
+		for (GoapState s : effects) {
+			ef += (s.toString() + ", ");
+		}
+		return pc + "\n" + ef + "\n";
 	}
 }

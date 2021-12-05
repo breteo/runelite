@@ -5,7 +5,7 @@ import net.runelite.api.Skill;
 public class Observer {
 
     public Character pc;
-    private Client client;
+    public Client client;
     public Observer(Character pc, Client client) {
         this.pc = pc;
         this.client = client;
@@ -21,6 +21,6 @@ public class Observer {
     }
 
     public void setStats() {
-        pc.initStats(getStats());
+        this.pc.initStats(getStats());
     }
 }

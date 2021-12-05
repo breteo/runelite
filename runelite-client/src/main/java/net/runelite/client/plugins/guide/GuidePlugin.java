@@ -21,6 +21,7 @@ import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.util.ImageUtil;
 import net.runelite.api.Client;
+import net.runelite.api.Experience;
 import javaGOAP.GoapAgent;
 
 @PluginDescriptor(
@@ -43,8 +44,6 @@ public class GuidePlugin extends Plugin
     @Inject
     private Client client;
 
-    private PlanData pd;
-
     Integer ticks = 0;
 
     Character player;
@@ -52,6 +51,7 @@ public class GuidePlugin extends Plugin
     RuneUnit runeunit;
     GoapAgent agent;
     Hashtable<Skill, Integer> goalSkills;
+    Hashtable<String, Boolean> pdOptions = new Hashtable<String, Boolean>();
     @Provides
     GuideConfig getConfig(ConfigManager configManager)
     {
@@ -65,20 +65,24 @@ public class GuidePlugin extends Plugin
         panel.init(config);
 
         final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "notes_icon.png");
-        player = new Character();
 
         // observer updates the character with new skill data
-        observer = new Observer(player, client);
-        // we then set the runeunit to the initial player data (one skill at level 1)
-        runeunit = new RuneUnit(observer.pc);
-
         goalSkills = new Hashtable<Skill, Integer>();
         goalSkills.put(Skill.ATTACK, 25);
 
-        runeunit.initGoalState(goalSkills);
+        pdOptions.put("worldState", false);
+        pdOptions.put("goalState", false);
+        pdOptions.put("actionPlan", false);
+        pdOptions.put("availableActions", true);
 
-        agent = new DefaultGoapAgent(runeunit);
+        // we then set the runeunit to the initial player data (one skill at level 1)
+        // runeunit = new RuneUnit(observer.pc, goalSkills, client);
+        // runeunit.initGoalState(goalSkills);
 
+        agent = new RuneAgent(client, goalSkills);
+        ((RuneAgent)agent).updateObserver();
+        agent.update();
+        agent.update();
 
 
         navButton = NavigationButton.builder()
@@ -105,19 +109,19 @@ public class GuidePlugin extends Plugin
 
     @Subscribe
     public void onGameTick(GameTick event) {
-        observer.setStats();
-        runeunit.updateWorldState(observer.pc);
-        pd = new PlanData(runeunit);
-        // String data = observer.pc.levels.toString();
-        String data = pd.getData();
+        /*if (!((RuneUnit)agent.assignedGoapUnit).planFound()) {
+            agent.update();
+        }*/
+        // String data = "plan found: " + ((RuneUnit)agent.assignedGoapUnit).putGoapPlan().toString();
+        String data = "current action: " + ((RuneAgent)agent).fsmTop();
         panel.setStats(data);
+        // check if the player has moved outside
     }
 
     @Subscribe
     public void onStatChanged(StatChanged event) {
-        // This call will cause a freeze on startup, place it in onStatChanged
-        // agent.setAssignedGoapUnit(runeunit);
-        // agent.update();
+        agent.update();
+        // based on new data, update the main plugin view
     }
 }
 
