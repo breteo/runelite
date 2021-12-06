@@ -9,9 +9,7 @@ public interface GuideConfig extends Config
 {
     enum CombatEnum
     {
-        Attack,
-        Strength,
-        Defence,
+        Melee,
         Magic,
         Ranged
     }
@@ -49,7 +47,7 @@ public interface GuideConfig extends Config
             name = "Combat Focus",
             description = "Choose which combat discipline to focus"
     )
-    default CombatEnum enumConfig() { return CombatEnum.Attack; }
+    default CombatEnum enumConfig() { return CombatEnum.Melee; }
 
     @ConfigItem(
          position = 3,
@@ -57,5 +55,5 @@ public interface GuideConfig extends Config
          name = "Specified Level",
          description = "Specify a specific level"
     )
-    default int intConfig() { return 1; }
+    default int intConfig() { return 25; }
 }

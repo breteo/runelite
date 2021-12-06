@@ -37,17 +37,23 @@ public class RunePlanner implements IGoapPlanner {
 
 
         Integer currentLevel = runit.obChar.client.getRealSkillLevel(Skill.ATTACK);
-        Integer goalLevel = (Integer)goalState.get(0).value;
-        Skill currentSkill = strToSkill.get(goalState.get(0).effect);
+        Integer goalLevel;
+        Skill currentSkill;
         System.out.println(currentLevel);
-
-        for (GoapAction action : actions) {
-            CheckStat caction = (CheckStat) action;
-            if (currentLevel < goalLevel && caction.skill == currentSkill) {
-                createdPlan.add(action);
+        if(!goalState.isEmpty()) {
+            for (GoapState state : goalState) {
+                goalLevel = (Integer) state.value;
+                currentSkill = strToSkill.get(state.effect);
+                for (GoapAction action : actions) {
+                    CheckStat caction = (CheckStat) action;
+                    if (currentLevel < goalLevel && caction.skill == currentSkill) {
+                        createdPlan.add(action);
+                    }
+                }
             }
+            sort();
         }
-        sort();
+
         return createdPlan;
     }
 

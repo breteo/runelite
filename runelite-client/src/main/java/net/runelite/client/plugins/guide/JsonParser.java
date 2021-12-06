@@ -4,14 +4,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class JsonParser {
 
-    BufferedReader br = new BufferedReader(new FileReader("src/main/java/javaGOAP/guide.JSON"));
+    File file = new File("");
+
+    BufferedReader br;
     String line;
     StringBuilder sbuilderObj = new StringBuilder();
     JSONObject jsonObj;
@@ -19,6 +21,11 @@ public class JsonParser {
     public JsonParser() throws JSONException, FileNotFoundException {
         //Reading JSON from file system
         //make sure to change path of the training location on your local setup
+        // construct Json object in the constructor for the parser
+        String filePath = file.getAbsolutePath();
+        filePath = filePath.concat("/runelite-client/src/main/java/net/runelite/client/plugins/guide/guide.JSON");
+        System.out.println("path: " + filePath);
+        br = new BufferedReader(new FileReader(filePath));
         System.out.println("Trying stuff Here");
         try {
             while ((line = br.readLine()) != null) {
@@ -42,6 +49,28 @@ public class JsonParser {
 //            System.out.println("Position : "+location);
 //            System.out.println("Age      : "+combatLevel);
 
+    }
+
+    // get array of keys for info objects
+    public ArrayList<String> getAllInfoKeys(String focus, String key) throws JSONException{
+        JSONArray arrObj = jsonObj.getJSONObject(focus).getJSONArray(key);
+        JSONObject obj = arrObj.getJSONObject(0);
+        Iterator<?> iter = obj.keys();
+        ArrayList<String> keylist = new ArrayList<String>();
+        while(iter.hasNext()) {
+            keylist.add((String)iter.next());
+        }
+        return keylist;
+    }
+
+    public ArrayList<String> getAllGuideKeys(String focus) throws JSONException {
+        JSONObject obj = jsonObj.getJSONObject(focus);
+        Iterator<?> iter = obj.keys();
+        ArrayList<String> keyList = new ArrayList<String>();
+        while (iter.hasNext()) {
+            keyList.add((String)iter.next());
+        }
+        return keyList;
     }
 
     //Fetching dictionary in Json using JSONArray
