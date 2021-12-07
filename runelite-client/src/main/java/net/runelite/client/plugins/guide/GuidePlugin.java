@@ -145,12 +145,12 @@ public class GuidePlugin extends Plugin
             ((RuneUnit) agent.assignedGoapUnit).goalStatTable = goalSkills;
 
             // String data = "plan found: " + ((RuneUnit)agent.assignedGoapUnit).putGoapPlan().toString();
-            String data = "current action: " + ((RuneAgent) agent).fsmTop() + "\n" + "worldState size: " + ((RuneUnit) agent.assignedGoapUnit).getWorldState().size();
+            String data = "worldState size: " + ((RuneUnit) agent.assignedGoapUnit).getWorldState().size();
             for (GoapAction g : ((RuneUnit) agent.assignedGoapUnit).putGoapPlan()) {
                 data = data.concat(g.toString() + "\n");
             }
             data = data.concat("\n" + "plan found: " + ((RuneUnit) agent.assignedGoapUnit).planFound() + "\n" +
-                    "Goal Level: " + goalLevel + "\n" + "focus: " + focus + "\n" + "Best Mob: " + mob_data + "\n");
+                    "Goal Level: " + goalLevel + "\n" + "focus: " + focus + "\n" + "\n" + "Best Mob(s) to farm: " + "\n" + mob_data + "\n");
 
             panel.setStats(data);
         }
@@ -260,21 +260,36 @@ public class GuidePlugin extends Plugin
         if (!focusStr.isEmpty() && !levelStr.isEmpty()) {
             ArrayList<String> arr;
             arr = json.getAllInfoKeys(focusStr, levelStr);
+            log.info(arr.toString());
             if (arr.size() == 5) {
                 outString = outString.concat("Spell to use: " + json.getSpell(focusStr, levelStr) + "\n");
-                outString = outString.concat("Mob: " + json.getName(focusStr, levelStr, arr.get(1)) + "\n");
-                outString = outString.concat("Location: " + json.getLocation(focusStr, levelStr, arr.get(2)) + "\n");
-                outString = outString.concat("HP: " + json.getHitpoints(focusStr, levelStr, arr.get(3)) + "\n");
-                outString = outString.concat("Combat Level: " + json.getLevel(focusStr, levelStr, arr.get(4)) + "\n");
-                outString = outString.concat("\n");
-            } else {
-                outString = outString.concat("Mob: " + json.getName(focusStr, levelStr, arr.get(0)) + "\n");
-                outString = outString.concat("Location: " + json.getLocation(focusStr, levelStr, arr.get(1)) + "\n");
-                outString = outString.concat("HP: " + json.getHitpoints(focusStr, levelStr, arr.get(2)) + "\n");
-                outString = outString.concat("Combat Level: " + json.getLevel(focusStr, levelStr, arr.get(3)) + "\n");
-                outString = outString.concat("\n");
+            }
+            ArrayList<Integer> levelList = new ArrayList<>();
+            for (String str : arr) {
+                levelList.add(Integer.parseInt(json.getLevel(focusStr, levelStr, str)));
+            }
+            int count = 0;
+
+            player_combat_level = Experience.getCombatLevel(
+                    client.getRealSkillLevel(Skill.ATTACK),
+                    client.getRealSkillLevel(Skill.STRENGTH),
+                    client.getRealSkillLevel(Skill.DEFENCE),
+                    client.getRealSkillLevel(Skill.HITPOINTS),
+                    client.getRealSkillLevel(Skill.MAGIC),
+                    client.getRealSkillLevel(Skill.RANGED),
+                    client.getRealSkillLevel(Skill.PRAYER));
+            for (String str : arr) {
+                String cloutString = "";
+                if (player_combat_level >= levelList.get(count)) {
+                    cloutString = cloutString.concat("\n" + "\n" + "Mob: " + json.getName(focusStr, levelStr, str) + "\n");
+                    cloutString = cloutString.concat("Location: " + json.getLocation(focusStr, levelStr, str) + "\n");
+                    cloutString = cloutString.concat("HP: " + json.getHitpoints(focusStr, levelStr, str) + "\n");
+                    cloutString = cloutString.concat("Combat Level: " + json.getLevel(focusStr, levelStr, str) + "\n");
+                    cloutString = cloutString.concat("\n");
+                }
             }
         }
+
         return outString;
     }
 }

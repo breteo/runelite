@@ -89,7 +89,7 @@ public class RunePlanner implements IGoapPlanner {
         for (GoapAction g: this.createdPlan) {
             copy.add(g);
         }
-        copy.sort(null);
+        // copy.sort(null);
         this.createdPlan = new PriorityQueue<GoapAction>();
         for (GoapAction g : copy) {
             this.createdPlan.add(g);

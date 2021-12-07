@@ -71,7 +71,10 @@ public class RuneUnit extends GoapUnit {
     }
 
     public void updateActions() {
-        HashSet<GoapAction> copy = getAvailableActions();
+        HashSet<GoapAction> copy = new HashSet<GoapAction>();
+        for (GoapAction g : getAvailableActions()) {
+            copy.add(g);
+        }
         for (GoapAction g : copy) {
             removeAvailableAction(g);
         }

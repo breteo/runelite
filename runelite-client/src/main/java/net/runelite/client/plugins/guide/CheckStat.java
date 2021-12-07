@@ -102,7 +102,11 @@ public class CheckStat extends GoapAction implements Comparable<CheckStat> {
 
     @Override
     public int compareTo(CheckStat o) {
-        if (this.levelTo > o.levelTo) {
+        if (o.skill.ordinal() > skill.ordinal()) {
+            return -1;
+        } else if (o.skill.ordinal() < skill.ordinal()) {
+            return 1;
+        }else if (this.levelTo > o.levelTo) {
             return 1;
         } else if (this.levelTo < o.levelTo) {
             return -1;
