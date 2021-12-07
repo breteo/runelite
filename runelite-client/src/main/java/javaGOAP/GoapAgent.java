@@ -16,7 +16,7 @@ public abstract class GoapAgent
 		implements ImportantUnitChangeEventListener, PlanCreatedEventListener, FSMPlanEventListener {
 
 	public FSM fsm = new FSM();
-	private IdleState idleState;
+	public IdleState idleState;
 	public IGoapUnit assignedGoapUnit;
 
 	/**

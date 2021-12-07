@@ -1,12 +1,13 @@
 package net.runelite.client.plugins.guide;
 
-import java.util.Hashtable;
-import java.util.Queue;
+import java.util.*;
+
 import javaGOAP.*;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Skill;
 
-
+@Slf4j
 public class RuneUnit extends GoapUnit {
 
 
@@ -14,7 +15,7 @@ public class RuneUnit extends GoapUnit {
     Queue<GoapAction> unitPlan;
     Queue<Skill> priorityQueue;
     Hashtable<String, Integer> metadata;
-    Hashtable<Skill, Integer> goalStatTable;
+    public Hashtable<Skill, Integer> goalStatTable;
     Boolean isPlanFound = false;
 
     public RuneUnit(Observer obs, Hashtable<Skill, Integer> goalStatTable, Client c) {
@@ -33,22 +34,28 @@ public class RuneUnit extends GoapUnit {
     }
 
     public void updateWorldState(Character character) {
-        for(GoapState state : getWorldState()) {
-            try {
-                this.removeWorldState(state);
-            } catch (Exception e) {
-                System.out.println("OOPS...");
-            }
+        HashSet<GoapState> copy = new HashSet<GoapState>();
+        for (GoapState state : getWorldState()) {
+            copy.add(state);
         }
-        initWorldState(character);
+        if (getWorldState() != null) {
+            log.info("Length: " + copy.size());
+            for (int i = 0; i < copy.size(); i++) {
+                // log.info(state.toString());
+                this.removeWorldState((GoapState)copy.toArray()[i]);
+            }
+            initWorldState(character);
+        }
     }
 
     public void initGoalState(Hashtable<Skill, Integer> goalStatTable) {
         this.goalStatTable = goalStatTable;
-        for (Skill s : Skill.values()) {
-            if (goalStatTable.get(s) != this.obChar.pc.levels.get(s) &&
-                goalStatTable.get(s) != null) {
-                this.addGoalState(new GoapState(10, s.toString(), goalStatTable.get(s)));
+        if (this.goalStatTable != null) {
+            for (Skill s : Skill.values()) {
+                if (goalStatTable.get(s) != this.obChar.pc.levels.get(s) &&
+                        goalStatTable.get(s) != null) {
+                    this.addGoalState(new GoapState(10, s.toString(), goalStatTable.get(s)));
+                }
             }
         }
     }
@@ -60,6 +67,25 @@ public class RuneUnit extends GoapUnit {
                     this.addAvailableAction(new CheckStat(this.obChar.pc, s, i));
                 }
             }
+        }
+    }
+
+    public void updateActions() {
+        HashSet<GoapAction> copy = getAvailableActions();
+        for (GoapAction g : copy) {
+            removeAvailableAction(g);
+        }
+        updateObserver();
+        initActions();
+    }
+
+    public void clearGoalState() {
+        List<GoapState> copy = new ArrayList<GoapState>();
+        for (GoapState g : getGoalState()) {
+            copy.add(g);
+        }
+        for (GoapState g : copy) {
+            this.removeGoalState(g.effect);
         }
     }
 
@@ -79,6 +105,7 @@ public class RuneUnit extends GoapUnit {
     @Override
     public void goapPlanFinished() {
         System.out.println("Plan Finished.");
+        System.out.println("sizeof plan: " + this.unitPlan.size());
     }
 
     @Override
@@ -86,6 +113,10 @@ public class RuneUnit extends GoapUnit {
         unitPlan = plan;
         isPlanFound = true;
         System.out.println("Plan Found");
+        for (GoapAction action : this.unitPlan) {
+            System.out.println(action);
+        }
+        System.out.println("sizeof plan: " + this.unitPlan.size());
     }
 
     public Boolean planFound() { return isPlanFound; }
@@ -100,6 +131,7 @@ public class RuneUnit extends GoapUnit {
     public void update() {
         // Called by the Agent.update() method
         this.obChar.setStats();
+        updateWorldState(this.obChar.pc);
     }
 
     public void setStats(Character c) {

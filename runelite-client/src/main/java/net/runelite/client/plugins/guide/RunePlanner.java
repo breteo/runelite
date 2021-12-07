@@ -1,12 +1,14 @@
 package net.runelite.client.plugins.guide;
 
 import javaGOAP.*;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Deque;
 import net.runelite.api.Client;
 import net.runelite.api.Skill;
 
 import java.util.*;
 
+@Slf4j
 public class RunePlanner implements IGoapPlanner {
 
     GoapState goalState;
@@ -15,6 +17,7 @@ public class RunePlanner implements IGoapPlanner {
     Queue<GoapAction> createdPlan;
     @Override
     public Queue<GoapAction> plan(IGoapUnit goapUnit) {
+        log.warn("initializing planner.");
         RuneUnit runit = (RuneUnit) goapUnit;
         Observer obs = runit.obChar;
         createdPlan = new PriorityQueue<GoapAction>();
@@ -31,7 +34,7 @@ public class RunePlanner implements IGoapPlanner {
 
 
 
-        // greedy planner, no graph, only works for attack
+
         // for each item in the goal table, get the world state, then add
         // actions that move the world state towards the goal of the plan
 
@@ -39,8 +42,9 @@ public class RunePlanner implements IGoapPlanner {
         Integer currentLevel = runit.obChar.client.getRealSkillLevel(Skill.ATTACK);
         Integer goalLevel;
         Skill currentSkill;
-        System.out.println(currentLevel);
+        // System.out.println(currentLevel);
         if(!goalState.isEmpty()) {
+            log.warn("GoalState is not empty");
             for (GoapState state : goalState) {
                 goalLevel = (Integer) state.value;
                 currentSkill = strToSkill.get(state.effect);

@@ -73,6 +73,11 @@ public class JsonParser {
         return keyList;
     }
 
+    public String getSpell(String focus, String key) throws JSONException {
+        JSONArray arrObj = jsonObj.getJSONObject(focus).getJSONArray(key);
+        return arrObj.getJSONObject(0).getString("spellToUse");
+    }
+
     //Fetching dictionary in Json using JSONArray
     public String getName(String focus, String key, String info) throws JSONException {
         JSONArray arrObj = jsonObj.getJSONObject(focus).getJSONArray(key);
